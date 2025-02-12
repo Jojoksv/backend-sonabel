@@ -24,17 +24,17 @@ export class AuthService {
 
   async login({ loginData }) {
     try {
-      await limiter.consume(loginData.email);
+      await limiter.consume(loginData.matricule);
     } catch {
       throw new UnauthorizedException(
         'Trop de tentatives de connexion. Veuillez réessayer plus tard.',
       );
     }
 
-    const { email, password } = loginData;
+    const { matricule, password } = loginData;
 
     const existingUser = await this.prisma.user.findUnique({
-      where: { email },
+      where: { matricule },
     });
 
     if (!existingUser) {
@@ -52,16 +52,15 @@ export class AuthService {
 
     return this.authenticateUser({
       userId: existingUser.id,
-      role: existingUser.role,
     });
   }
 
   async register({ registerData }: { registerData: CreateUser }) {
-    const { email, name, password } = registerData;
+    const { matricule, name, password } = registerData;
 
     const existingUser = await this.prisma.user.findUnique({
       where: {
-        email: email,
+        matricule: matricule,
       },
     });
 
@@ -73,7 +72,7 @@ export class AuthService {
 
     const createdUser = await this.prisma.user.create({
       data: {
-        email,
+        matricule,
         name,
         password: hashPassword,
       },
@@ -81,7 +80,6 @@ export class AuthService {
 
     return this.authenticateUser({
       userId: createdUser.id,
-      role: 'user',
     });
   }
 
@@ -99,8 +97,8 @@ export class AuthService {
     return compare(password, hashPassword);
   }
 
-  private authenticateUser({ userId, role }: UserPayload) {
-    const payload: UserPayload = { userId, role };
+  private authenticateUser({ userId }: UserPayload) {
+    const payload: UserPayload = { userId };
     return {
       access_token: this.jwtService.sign(payload),
     };

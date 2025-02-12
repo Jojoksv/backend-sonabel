@@ -12,9 +12,8 @@ export class UserService {
       },
       select: {
         id: true,
-        email: true,
+        matricule: true,
         name: true,
-        role: true,
       },
     });
 

@@ -8,25 +8,17 @@ import { UserPayload } from 'src/types/types';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
-      jwtFromRequest: ExtractJwt.fromExtractors([
-        (req) => {
-          // Vérifie si les cookies et access_token existent avant d'y accéder
-          if (req && req.cookies && req.cookies['access_token']) {
-            return req.cookies['access_token'];
-          }
-          return null;
-        },
-      ]),
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Récupère le token dans le header Authorization
       ignoreExpiration: false,
       secretOrKey: jwtConstants.secret,
     });
   }
 
   async validate(payload: UserPayload) {
-    const { userId, role } = payload;
-    if (!userId || !role) {
+    const { userId } = payload;
+    if (!userId) {
       throw new UnauthorizedException('Invalid token payload');
     }
-    return { userId, role };
+    return { userId };
   }
 }

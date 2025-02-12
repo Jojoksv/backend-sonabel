@@ -31,18 +31,11 @@ export class AuthController {
   async login(@Body() loginData: LoginDto, @Res() res: any) {
     try {
       this.logger.log(
-        `Tentative de connexion pour l'utilisateur ${loginData.email}`,
+        `Tentative de connexion pour l'utilisateur ${loginData.matricule}`,
       );
       const { access_token } = await this.authService.login({ loginData });
 
-      res.cookie('access_token', access_token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'PROD',
-        sameSite: 'none',
-        maxAge: 24 * 60 * 60 * 1000,
-      });
-
-      return res.send({ message: 'Connexion réussie !' });
+      return res.send({ message: 'Connexion réussie !', token: access_token });
     } catch (error) {
       this.logger.error('Erreur lors de la connexion', error);
       throw new UnauthorizedException(
@@ -60,14 +53,7 @@ export class AuthController {
   ) {
     const { access_token } = await this.authService.register({ registerData });
 
-    res.cookie('access_token', access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'PROD',
-      sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-
-    return res.send({ message: 'Inscription réussie !' });
+    return res.send({ message: 'Inscription réussie !', token: access_token });
   }
 
   @UseGuards(JwtAuthGuard)

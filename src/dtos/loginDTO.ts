@@ -2,17 +2,16 @@ import { IsString, MinLength, MaxLength, Matches } from 'class-validator';
 
 export class LoginDto {
   /**
-   * Adresse email de l'utilisateur.
+   * Matricule de l'utilisateur.
    * Validation :
-   * - Doit être une adresse email valide.
    * - Longueur minimale : 5 caractères.
    * - Longueur maximale : 50 caractères.
    * - Rejette les adresses provenant de domaines temporaires.
    */
-  @IsString({ message: "L'email doit être une chaîne de caractères." })
-  @MinLength(5, { message: "L'email doit comporter au moins 5 caractères." })
-  @MaxLength(50, { message: "L'email ne peut pas dépasser 50 caractères." })
-  email: string;
+  @IsString({ message: "Le matricule doit être une chaîne de caractères." })
+  @MinLength(5, { message: "Le matricule doit comporter au moins 5 caractères." })
+  @MaxLength(50, { message: "Le matricule ne peut pas dépasser 50 caractères." })
+  matricule: string;
 
   /**
    * Mot de passe de l'utilisateur.

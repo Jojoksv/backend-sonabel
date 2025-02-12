@@ -1,4 +1,4 @@
-export type loginDataDTO = { email: string; password: string };
-export type UserPayload = { userId: string; role: string };
+export type loginDataDTO = { matricule: string; password: string };
+export type UserPayload = { userId: string };
 export type RequestWithUser = { user: UserPayload };
-export type CreateUser = { email: string; name: string; password: string };
+export type CreateUser = { matricule: string; name: string; password: string };

@@ -1,9 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import cookieParser from 'cookie-parser';
-import * as express from 'express';
-import { join } from 'path';
 import { origin } from './config/constants';
 
 async function bootstrap() {
@@ -17,11 +14,6 @@ async function bootstrap() {
       transform: true,
     }),
   );
-
-  app.use(express.static(join(process.cwd(), './uploads')));
-
-  // Cookie parser
-  app.use(cookieParser());
 
   // CORS configuration
   app.enableCors({

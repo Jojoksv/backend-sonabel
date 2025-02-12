@@ -8,24 +8,26 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(cuid())
-  email    String @unique
-  name     String
-  password String
-  role     String @default("user")
+  id        String @id @default(cuid())
+  matricule String @unique
+  name      String
+  password  String
 }
 
-model Product {
-  id        String      @id @default(cuid())
-  name      String      @unique
-  price     Float
-  oldPrice  Float
-  category  String
-  rating    Int
-  reviews   Int
-  description String
-  features  String[]
-  images    String[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Mission {
+  id            String   @id @default(uuid()) // Identifiant unique
+  title         String  @unique // Titre de la mission
+  description   String
+  responsible   String
+  destination   String
+  missionObject String
+  priority      String?  // Optionnel
+  assignment    String?  // Optionnel
+  observations  String?  // Optionnel
+  startDate     DateTime
+  endDate       DateTime
+  createdAt     DateTime @default(now()) // Date de création
+  updatedAt     DateTime @updatedAt // Mise à jour automatique
 }
+
+
