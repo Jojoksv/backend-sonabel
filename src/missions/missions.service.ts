@@ -30,6 +30,13 @@ export class MissionsService {
     });
   }
 
+  async updateStatus(id: string, updateMissionStatusDto: any) {
+    return await this.prisma.mission.update({
+      where: { id },
+      data: updateMissionStatusDto,
+    });
+  }
+
   async remove(id: string) {
     return await this.prisma.mission.delete({ where: { id } });
   }

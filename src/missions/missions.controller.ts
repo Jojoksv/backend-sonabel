@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, Patch } from '@nestjs/common';
 import { MissionsService } from './missions.service';
 import { CreateMissionDto } from './dto/create-mission.dto';
 import { UpdateMissionDto } from './dto/update-mission.dto';
@@ -22,9 +22,17 @@ export class MissionsController {
     return this.missionsService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateMissionDto: UpdateMissionDto) {
     return this.missionsService.update(id, updateMissionDto);
+  }
+
+  @Patch(':id')
+  async updateMissionStatus(
+    @Param('id') id: string,
+    @Body() updateMissionStatusDto: any,
+  ) {
+    return this.missionsService.updateStatus(id, updateMissionStatusDto);
   }
 
   @Delete(':id')

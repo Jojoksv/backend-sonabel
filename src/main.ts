@@ -17,9 +17,9 @@ async function bootstrap() {
 
   // CORS configuration
   app.enableCors({
-    origin: 'https://front-sonabel-seven.vercel.app',
+    origin: ['http://localhost:5174', 'https://front-sonabel-seven.vercel.app'],
     credentials: true,
-    methods: 'GET, PUT, POST, DELETE, OPTIONS',
+    methods: 'GET, PUT, PATCH, POST, DELETE, OPTIONS',
     allowedHeaders: 'X-Requested-With, Content-Type, Accept, Observe',
   });
 
