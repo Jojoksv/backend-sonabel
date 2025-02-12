@@ -26,6 +26,7 @@ model Mission {
   observations  String?  // Optionnel
   startDate     DateTime
   endDate       DateTime
+  status        String @default("En attente") // Statut de la mission
   createdAt     DateTime @default(now()) // Date de création
   updatedAt     DateTime @updatedAt // Mise à jour automatique
 }
