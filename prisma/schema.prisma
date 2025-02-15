@@ -6,29 +6,39 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 model User {
-  id        String @id @default(cuid())
-  matricule String @unique
+  id        String  @id @default(cuid())
+  matricule String  @unique
   name      String
+  email     String?  @unique
+  phone     String?  @unique
   password  String
+  role      String?  // Exemple : "admin", "responsable", "collaborateur"
+  position  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  missions Mission[] // Relation avec les missions (un utilisateur peut avoir plusieurs missions)
 }
 
 model Mission {
-  id            String   @id @default(uuid()) // Identifiant unique
-  title         String  @unique // Titre de la mission
+  id            String   @id @default(uuid())
+  title         String   @unique
   description   String
-  responsible   String
+  responsible   String   // Peut être remplacé par une relation User
   destination   String
   missionObject String
-  priority      String?  // Optionnel
-  assignment    String?  // Optionnel
-  observations  String?  // Optionnel
+  priority      String? 
+  assignment    String[] 
+  observations  String? 
   startDate     DateTime
   endDate       DateTime
-  status        String? @default("En attente") // Statut de la mission
-  createdAt     DateTime @default(now()) // Date de création
-  updatedAt     DateTime @updatedAt // Mise à jour automatique
+  status        String?  @default("En attente")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 

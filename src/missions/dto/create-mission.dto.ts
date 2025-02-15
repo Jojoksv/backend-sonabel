@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateMissionDto {
   @IsNotEmpty()
@@ -27,8 +27,10 @@ export class CreateMissionDto {
   priority?: string;
 
   @IsOptional()
-  @IsString()
-  assignment?: string;
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsString({ each: true })
+  assignment?: string[]
 
   @IsOptional()
   @IsString()
@@ -43,4 +45,9 @@ export class CreateMissionDto {
   @Type(() => Date) // ✅ Convertit automatiquement en `Date`
   @IsDate()
   endDate: Date;
+
+  @IsNotEmpty() // ✅ Ajout du champ `userId`
+  @IsString()
+  @IsOptional()
+  userId: string;
 }
