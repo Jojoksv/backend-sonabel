@@ -29,7 +29,7 @@ model Mission {
   destination   String
   missionObject String
   priority      String? 
-  assignment    String[] 
+  assignment    String[]
   observations  String? 
   startDate     DateTime
   endDate       DateTime
