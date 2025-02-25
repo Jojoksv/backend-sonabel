@@ -59,6 +59,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async getAuthenticatedUser(@Req() request: any) {
+    console.log('Utilisateur authentifié:', request.user);
     return await this.userService.getUser({
       userId: request.user.userId,
     });

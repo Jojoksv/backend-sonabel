@@ -75,6 +75,7 @@ export class AuthService {
         matricule,
         name,
         password: hashPassword,
+        role: 'STAFF',
       },
     });
 

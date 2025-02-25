@@ -19,7 +19,7 @@ async function bootstrap() {
     origin: ['http://localhost:5174', 'https://front-sonabel-seven.vercel.app'],
     credentials: true,
     methods: 'GET, PUT, PATCH, POST, DELETE, OPTIONS',
-    allowedHeaders: 'X-Requested-With, Content-Type, Accept, Observe',
+    allowedHeaders: 'X-Requested-With, Content-Type, Accept, Observe, Authorization',
   });
 
   await app.listen(process.env.PORT ?? 3000);
