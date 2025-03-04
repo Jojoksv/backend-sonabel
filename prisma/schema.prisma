@@ -6,6 +6,7 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
   id        String  @id @default(cuid())
   matricule String  @unique
@@ -13,19 +14,20 @@ model User {
   email     String?  @unique
   phone     String?  @unique
   password  String
-  role      String?  // Exemple : "admin", "responsable", "collaborateur"
+  role      String?  
   position  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  missions Mission[] // Relation avec les missions (un utilisateur peut avoir plusieurs missions)
+  missions Mission[] 
+  reports  Report[] // Ajout de la relation inverse avec Report
 }
 
 model Mission {
   id            String   @id @default(uuid())
   title         String   @unique
   description   String
-  responsible   String   // Peut être remplacé par une relation User
+  responsible   String   
   destination   String
   missionObject String
   priority      String? 
@@ -39,6 +41,18 @@ model Mission {
 
   userId        String
   user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reports       Report[] // Ajout de la relation inverse avec Report
 }
 
+model Report {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  authorId    String
+  missionId   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
+  author      User     @relation(fields: [authorId], references: [id])
+  mission     Mission  @relation(fields: [missionId], references: [id])
+}
