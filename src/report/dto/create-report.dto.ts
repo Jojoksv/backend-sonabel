@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateReportDto {
     @IsNotEmpty()
@@ -12,6 +12,10 @@ export class CreateReportDto {
   @IsNotEmpty()
   @IsString()
   authorId: string;
+
+  @IsOptional()
+  @IsString()
+  status?: string;
 
   @IsNotEmpty()
   @IsString()
